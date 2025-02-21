@@ -1,25 +1,52 @@
-
-###> symfony/framework-bundle ###
+# ======================== #
+# symfony/framework-bundle #
+# ======================== #
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
-/vendor/
-###< symfony/framework-bundle ###
 
-###> phpunit/phpunit ###
+# =============== #
+# phpunit/phpunit #
+# =============== #
 /phpunit.xml
 .phpunit.result.cache
-###< phpunit/phpunit ###
 
-###> symfony/phpunit-bridge ###
+# ====================== #
+# symfony/phpunit-bridge #
+# ====================== #
 .phpunit.result.cache
 /phpunit.xml
-###< symfony/phpunit-bridge ###
 
-###> symfony/asset-mapper ###
+# ==================== #
+# symfony/asset-mapper #
+# ==================== #
 /public/assets/
 /assets/vendor/
-###< symfony/asset-mapper ###
+
+# ==================== #
+# Packages and vendors #
+# ==================== #
+node_modules/
+/vendor/
+
+# === #
+# IDE #
+# === #
+.idea/
+.vs/
+/*.tmp
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
+[Dd]esktop.ini
