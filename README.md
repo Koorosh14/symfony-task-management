@@ -68,24 +68,23 @@ For testing:
 ```
 composer require symfony/test-pack --dev
 ```
-</details>
 
-## Configure the Database Connection
-Edit database details in the `.env` file in your project root:
-```
-DATABASE_URL="mysql://root:password@127.0.0.1:3306/task_management_system?serverVersion=8.0"
-```
-
-## Install Symfony Webpack Encore (Optional, for Asset Management)
+#### Symfony Webpack Encore (Optional, for Asset Management)
 If you plan to use CSS/JS bundling and want to integrate tools like Webpack, install the Webpack Encore bundle:
 ```
 composer require symfony/webpack-encore-bundle
 ```
 Then, install Webpack and configure your assets.
 
----
+</details>
 
-## Update .env for Development
+### Configure the Database Connection
+Edit database details in the `.env` file in your project root:
+```
+DATABASE_URL="mysql://root:password@127.0.0.1:3306/task_management_system?serverVersion=8.0"
+```
+
+### Update .env for Development
 Set `APP_ENV=dev` and `APP_DEBUG=1` in `.env` for development mode.
 
 ## Create the Database
@@ -93,12 +92,26 @@ Set `APP_ENV=dev` and `APP_DEBUG=1` in `.env` for development mode.
 php bin/console doctrine:database:create
 ```
 
+## Create entities and migrations
+Create `User`, `Task` and `Log` entities with `make` command:
+```
+php bin/console make:entity
+```
+
+Update entity and repository classes if needed and when you're done, make the migrations:
+```
+php bin/console make:migration
+```
+
+Update the new created migration class if needed, and finally, execute the migration to create tables in the database:
+```
+php bin/console doctrine:migrations:migrate
+```
+
 ## Run the server
 ```
 symfony server:start
 ```
-
----
 
 ## Checking Security Vulnerabilities
 The symfony binary created when you installed the Symfony CLI provides a command to check whether your project's dependencies contain any known security vulnerability:
