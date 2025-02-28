@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\UserRole;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -39,6 +41,17 @@ class User implements PasswordAuthenticatedUserInterface
 
 	#[ORM\Column(type: 'datetime')]
 	private ?\DateTime $updatedAt = null;
+
+    /**
+     * @var Collection<int, Task>
+     */
+    #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'assignedTo')]
+    private Collection $assignedTasks;
+
+    public function __construct()
+    {
+        $this->assignedTasks = new ArrayCollection();
+    }
 
 	public function getId(): ?int
 	{
@@ -150,4 +163,31 @@ class User implements PasswordAuthenticatedUserInterface
 		// If you store any temporary, sensitive data on the user, clear it here
 		// $this->plainPassword = null;
 	}
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getAssignedTasks(): Collection
+    {
+        return $this->assignedTasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->assignedTasks->contains($task)) {
+            $this->assignedTasks->add($task);
+            $task->addAssignedTo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        if ($this->assignedTasks->removeElement($task)) {
+            $task->removeAssignedTo($this);
+        }
+
+        return $this;
+    }
 }
