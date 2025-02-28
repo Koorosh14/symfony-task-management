@@ -36,10 +36,10 @@ class User implements PasswordAuthenticatedUserInterface
 	#[ORM\Column(options: ['default' => false])]
 	private ?bool $isActive = null;
 
-	#[ORM\Column(type: 'datetime')]
+	#[ORM\Column]
 	private ?\DateTime $createdAt = null;
 
-	#[ORM\Column(type: 'datetime')]
+	#[ORM\Column]
 	private ?\DateTime $updatedAt = null;
 
     /**
