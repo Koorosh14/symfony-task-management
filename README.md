@@ -18,7 +18,7 @@ cd symfony-task-management
 
 ### Essential Packages to Install
 <details>
-  <summary>Install these if not already present in composer.json:</summary>
+	<summary>Install these if not already present in composer.json:</summary>
 
 Basic web functionality:
 ```
@@ -75,7 +75,6 @@ If you plan to use CSS/JS bundling and want to integrate tools like Webpack, ins
 composer require symfony/webpack-encore-bundle
 ```
 Then, install Webpack and configure your assets.
-
 </details>
 
 ### Configure the Database Connection
@@ -106,6 +105,50 @@ php bin/console make:migration
 Update the new created migration class if needed, and finally, execute the migration to create tables in the database:
 ```
 php bin/console doctrine:migrations:migrate
+```
+
+## Add dummy/fake data to the database
+First, install `DoctrineFixturesBundle` package bundle:
+```
+composer require orm-fixtures --dev
+```
+
+<details>
+	<summary>Then update the newly created AppFixtures class and add some dummy data to it:</summary>
+
+```
+$user = new User();
+$user->setEmail(...);
+$user->setPassword(...);
+...
+
+$manager->persist($user);
+
+$task = new Task();
+$task->setTitle(...);
+$task->setDescription(...);
+...
+
+$manager->persist($task);
+
+...
+```
+</details>
+
+Lastly, load the fixtures into your database tables:
+```
+bin/console doctrine:fixtures:load
+```
+
+Or if you don't want to lose your data:
+```
+bin/console doctrine:fixtures:load --append
+```
+
+## Check the newly added rows in the database
+You can use a visual database explorer (like phpMyAdmin) for this, or you use Symfony's `dbal`:
+```
+bin/console dbal:run-sql "SELECT * FROM user;"
 ```
 
 ## Run the server
