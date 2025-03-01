@@ -96,6 +96,7 @@ Create `User`, `Task` and `Log` entities with `make` command:
 ```
 php bin/console make:entity
 ```
+> Note that you should use PascalCase for class names and camelCase for property names.
 
 Update entity and repository classes if needed and when you're done, make the migrations:
 ```
@@ -145,10 +146,15 @@ Or if you don't want to lose your data:
 bin/console doctrine:fixtures:load --append
 ```
 
-## Check the newly added rows in the database
+### Check the newly added rows in the database
 You can use a visual database explorer (like phpMyAdmin) for this, or you use Symfony's `dbal`:
 ```
 bin/console dbal:run-sql "SELECT * FROM user;"
+```
+
+## Add controllers
+```
+bin/console make:controller
 ```
 
 ## Run the server
