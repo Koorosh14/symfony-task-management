@@ -33,7 +33,7 @@ class User implements PasswordAuthenticatedUserInterface
 	#[ORM\Column(enumType: UserRole::class)]
 	private ?UserRole $role = UserRole::USER;
 
-	#[ORM\Column(options: ['default' => false])]
+	#[ORM\Column(options: ['default' => true])]
 	private ?bool $isActive = null;
 
 	#[ORM\Column]
