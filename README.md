@@ -157,6 +157,29 @@ bin/console dbal:run-sql "SELECT * FROM user;"
 bin/console make:controller
 ```
 
+## Add Tailwind
+Install the bundle & initialize your app:
+```
+composer require symfonycasts/tailwind-bundle
+php bin/console tailwind:init
+```
+
+Include the input file (`assets/styles/app.css` by default) in `base.html.twig`:
+```
+{# templates/base.html.twig #}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
+```
+
+Run the watch command that will automatically recompile your CSS file:
+```
+php bin/console tailwind:build --watch
+```
+
+> More Tailwind commands and details can be found in [Symfony documentation](https://Symfony.com/bundles/TailwindBundle/current/index.html).
+
 ## Run the server
 ```
 symfony server:start
