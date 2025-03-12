@@ -103,7 +103,12 @@ Update entity and repository classes if needed and when you're done, make the mi
 php bin/console make:migration
 ```
 
-Update the new created migration class if needed, and finally, execute the migration to create tables in the database:
+Update the new created migration class if needed, for example in this project, `created_at` and `updated_at` columns were edited like this:
+```
+created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+```
+
+And finally, execute the migration to create tables in the database:
 ```
 php bin/console doctrine:migrations:migrate
 ```
