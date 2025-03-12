@@ -17,11 +17,15 @@ final class TaskController extends AbstractController
 		]);
 	}
 
-	#[Route('/tasks/{id}', name: 'task_show')]
+	#[Route('/tasks/{id<\d+>}', name: 'task_show')]
 	public function show(int $id, TaskRepository $taskRepository): Response
 	{
+		$task = $taskRepository->find($id);
+		if (empty($task))
+			throw $this->createNotFoundException('Task not found');
+
 		return $this->render('task/show.html.twig', [
-			'task' => $taskRepository->findOneBy(['id' => $id]),
+			'task' => $task,
 		]);
 	}
 }
