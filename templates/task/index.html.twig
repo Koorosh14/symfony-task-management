@@ -12,7 +12,9 @@
 					<div class="bg-white shadow-md rounded-lg p-4 {% if task.isImportant %}border-2 border-red-500{% endif %}">
 						<div class="flex justify-between items-center mb-2">
 							<h2 class="text-xl font-semibold">
-								{{ task.title }}
+								<a href="{{ path('task_show', {id: task.id}) }}" class="hover:text-blue-600">
+									{{ task.title }}
+								</a>
 							</h2>
 							{% if task.isImportant %}
 								<span class="text-red-500 font-bold">Important</span>
