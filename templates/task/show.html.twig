@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task: {{ task.title }}{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white shadow-md rounded-lg p-6 {% if task.isImportant %}border-2 border-red-500{% endif %}">
+			<div class="flex justify-between items-center mb-4">
+				<h1 class="text-3xl font-bold">{{ task.title }}</h1>
+				{% if task.isImportant %}
+					<span class="text-red-500 font-bold text-lg">Important</span>
+				{% endif %}
+			</div>
+
+			<div class="mb-4">
+				<div class="grid md:grid-cols-2 gap-4">
+					<div>
+						<p class="text-gray-600">Status:</p>
+						<p class="font-medium">{{ task.status.value }}</p>
+					</div>
+
+					{% if task.dueDate %}
+						<div>
+							<p class="text-gray-600">Due Date:</p>
+							<p class="font-medium">{{ task.dueDate|date('F d, Y') }}</p>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+
+			{% if task.description %}
+				<div class="mb-4">
+					<h2 class="text-xl font-semibold mb-2">Description</h2>
+					<p class="text-gray-700">{{ task.description }}</p>
+				</div>
+			{% endif %}
+
+			<div class="mt-6">
+				<a href="{{ path('tasks_index') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+					Back to Tasks
+				</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
