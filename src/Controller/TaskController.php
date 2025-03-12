@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,8 @@ final class TaskController extends AbstractController
 	}
 
 	#[Route('/tasks/{id<\d+>}', name: 'task_show')]
-	public function show(int $id, TaskRepository $taskRepository): Response
+	public function show(Task $task): Response
 	{
-		$task = $taskRepository->find($id);
-		if (empty($task))
-			throw $this->createNotFoundException('Task not found');
-
 		return $this->render('task/show.html.twig', [
 			'task' => $task,
 		]);
