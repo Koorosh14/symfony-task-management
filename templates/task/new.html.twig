@@ -1,17 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create New Task{% endblock %}
+{% block title %}Create New Task
+{% endblock %}
 
 {% block body %}
 	<div class="container mx-auto px-4 py-8">
 		<h1 class="text-3xl font-bold mb-6">Create New Task</h1>
 
 		<div class="bg-white shadow-md rounded-lg p-6">
-			{{ form(form) }}
+			{{ form_start(form) }}
+				{{ form_row(form.title) }}
+				{{ form_row(form.description) }}
+				{{ form_row(form.status) }}
+				{{ form_row(form.isImportant) }}
+				{{ form_row(form.dueDate) }}
+				{{ form_row(form.assignedTo) }}
 
-			<a href="{{ path('tasks_index') }}" class="inline-block align-baseline font-bold text-blue-500 hover:text-blue-800">
-				Cancel
-			</a>
+				<a href="{{ path('tasks_index') }}" class="inline-block align-baseline font-bold text-blue-500 hover:text-blue-800">
+					Cancel
+				</a>
+			{{ form_end(form) }}
 		</div>
 	</div>
 {% endblock %}
