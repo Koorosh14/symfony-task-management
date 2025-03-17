@@ -46,6 +46,8 @@ final class TaskController extends AbstractController
 			$entityManager->persist($task);
 			$entityManager->flush();
 
+			$this->addFlash('success', 'Task created successfully!');
+
 			return $this->redirectToRoute('tasks_index', ['id' => $task->getId()]);
 		}
 
