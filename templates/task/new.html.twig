@@ -10,23 +10,41 @@
 		<div class="bg-white shadow-md rounded-lg p-6">
 			{{ form_start(form) }}
 				<div class="mb-4">
-					{{ form_row(form.title, {'attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_label(form.title, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_widget(form.title) }}
+					{{ form_errors(form.title) }}
 				</div>
+
 				<div class="mb-4">
-					{{ form_row(form.description, {'attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_label(form.description, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_widget(form.description) }}
+					{{ form_errors(form.description) }}
 				</div>
+
 				<div class="mb-4">
-					{{ form_row(form.status, {'attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_label(form.status, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_widget(form.status) }}
+					{{ form_errors(form.status) }}
 				</div>
+
 				<div class="mb-4">
-					{{ form_row(form.isImportant, {'attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_label(form.isImportant, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_widget(form.isImportant) }}
+					{{ form_errors(form.isImportant) }}
 				</div>
+
 				<div class="mb-4">
-					{{ form_row(form.dueDate, {'attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_label(form.dueDate, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_widget(form.dueDate) }}
+					{{ form_errors(form.dueDate) }}
 				</div>
+
 				<div class="mb-4">
-					{{ form_row(form.assignedTo, {'attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_label(form.assignedTo, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+					{{ form_widget(form.assignedTo) }}
+					{{ form_errors(form.assignedTo) }}
 				</div>
+
 
 				<div class="flex items-center justify-between">
 					<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
