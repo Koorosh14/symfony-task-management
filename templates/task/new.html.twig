@@ -27,9 +27,11 @@
 					{{ form_errors(form.status) }}
 				</div>
 
-				<div class="mb-4">
-					{{ form_label(form.isImportant, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-					{{ form_widget(form.isImportant) }}
+				<div class="mb-6">
+					<label class="inline-flex items-center">
+						{{ form_widget(form.isImportant) }}
+						<span class="ml-2 text-gray-700 font-bold">Mark as Important</span>
+					</label>
 					{{ form_errors(form.isImportant) }}
 				</div>
 
