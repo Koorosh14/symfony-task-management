@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use \App\Enum\TaskStatus;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -18,12 +19,14 @@ class Task
 	private ?int $id = null;
 
 	#[ORM\Column(length: 512)]
+	#[Assert\NotBlank]
 	private ?string $title = null;
 
 	#[ORM\Column(type: Types::TEXT, nullable: true)]
 	private ?string $description = null;
 
 	#[ORM\Column(enumType: TaskStatus::class)]
+	#[Assert\Choice([TaskStatus::PENDING, TaskStatus::IN_PROGRESS, TaskStatus::COMPLETED])]
 	private ?TaskStatus $status = TaskStatus::PENDING;
 
 	#[ORM\Column]
@@ -43,6 +46,8 @@ class Task
 	private Collection $assignedTo;
 
 	#[ORM\Column(nullable: true)]
+	#[Assert\Type('integer')]
+	#[Assert\Positive]
 	private ?int $parentId = null;
 
 	#[ORM\Column]
