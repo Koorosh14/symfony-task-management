@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -28,9 +31,21 @@ final class TaskController extends AbstractController
 	}
 
 	#[Route('/tasks/new', name: 'task_new')]
-	public function new(): Response
+	public function new(Request $request, EntityManagerInterface $entityManager): Response
 	{
-		$form = $this->createForm(TaskType::class);
+		$task = new Task();
+
+		$form = $this->createForm(TaskType::class, $task);
+
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid())
+		{
+			// Temporarily select a random user, will fix this later
+			$task->setCreatedBy($entityManager->getRepository(User::class)->findOneBy([]));
+
+			$entityManager->persist($task);
+			$entityManager->flush();
+		}
 
 		return $this->render('task/new.html.twig', [
 			'form' => $form,
