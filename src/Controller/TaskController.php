@@ -45,6 +45,8 @@ final class TaskController extends AbstractController
 
 			$entityManager->persist($task);
 			$entityManager->flush();
+
+			return $this->redirectToRoute('tasks_index', ['id' => $task->getId()]);
 		}
 
 		return $this->render('task/new.html.twig', [
