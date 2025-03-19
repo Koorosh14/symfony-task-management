@@ -77,21 +77,18 @@ final class TaskController extends AbstractController
 		]);
 	}
 
-	#[Route('/tasks/{id<\d+>}/delete', name: 'task_delete')]
+	#[Route('/tasks/{id<\d+>}/delete', name: 'task_delete', methods: ['POST'])]
 	public function delete(Task $task, Request $request, EntityManagerInterface $entityManager): Response
 	{
-		if ($request->isMethod('POST'))
+		// Check CSRF token for security
+		if ($this->isCsrfTokenValid('delete' . $task->getId(), $request->request->get('_token')))
 		{
 			$entityManager->remove($task);
 			$entityManager->flush();
 
 			$this->addFlash('success', 'Task deleted successfully!');
-
-			return $this->redirectToRoute('tasks_index');
 		}
 
-		return $this->render('task/delete.html.twig', [
-			'task' => $task,
-		]);
+		return $this->redirectToRoute('tasks_index');
 	}
 }
