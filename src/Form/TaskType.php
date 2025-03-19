@@ -21,24 +21,30 @@ class TaskType extends AbstractType
 	{
 		$builder
 			->add('title', TextType::class, [
+				'label' => 'Task Title',
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
 			])
 			->add('description', TextareaType::class, [
+				'label' => 'Description',
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1', 'rows' => 4],
 			])
 			->add('status', EnumType::class, [
+				'label' => 'Status',
 				'class' => TaskStatus::class,
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
 			])
 			->add('isImportant', CheckboxType::class, [
+				'label' => 'Mark as Important',
 				'attr' => ['class' => 'mr-2'],
 				'label_attr' => ['class' => 'inline-flex items-center'],
 			])
 			->add('dueDate', DateTimeType::class, [
+				'label' => 'Due Date',
 				'widget' => 'single_text',
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
 			])
 			->add('assignedTo', EntityType::class, [
+				'label' => 'Assigned to',
 				'class' => User::class,
 				'choice_label' => 'name',
 				'multiple' => true,
