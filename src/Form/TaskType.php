@@ -8,8 +8,8 @@ use App\Enum\TaskStatus;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,9 +29,13 @@ class TaskType extends AbstractType
 				'required' => false,
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1', 'rows' => 4],
 			])
-			->add('status', EnumType::class, [
+			->add('status', ChoiceType::class, [
 				'label' => 'Status',
-				'class' => TaskStatus::class,
+				'choices' => [
+					'Pending' => TaskStatus::PENDING,
+					'In Progress' => TaskStatus::IN_PROGRESS,
+					'Completed' => TaskStatus::COMPLETED,
+				],
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
 			])
 			->add('isImportant', CheckboxType::class, [
