@@ -1,68 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create New Task
-{% endblock %}
+{% block title %}Create New Task{% endblock %}
 
 {% block body %}
 	<div class="container mx-auto px-4 py-8">
 		<h1 class="text-3xl font-bold mb-6">Create New Task</h1>
 
 		<div class="bg-white shadow-md rounded-lg p-6">
-			{{ form_start(form) }}
-				{% for message in app.flashes('error') %}
-					<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-						{{ message }}
-					</div>
-				{% endfor %}
-
-				<div class="mb-4">
-					{{ form_label(form.title, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-					{{ form_widget(form.title) }}
-					{{ form_errors(form.title) }}
-				</div>
-
-				<div class="mb-4">
-					{{ form_label(form.description, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-					{{ form_widget(form.description) }}
-					{{ form_errors(form.description) }}
-				</div>
-
-				<div class="mb-4">
-					{{ form_label(form.status, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-					{{ form_widget(form.status) }}
-					{{ form_errors(form.status) }}
-				</div>
-
-				<div class="mb-6">
-					<label class="inline-flex items-center">
-						{{ form_widget(form.isImportant) }}
-						<span class="ml-2 text-gray-700 font-bold">Mark as Important</span>
-					</label>
-					{{ form_errors(form.isImportant) }}
-				</div>
-
-				<div class="mb-4">
-					{{ form_label(form.dueDate, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-					{{ form_widget(form.dueDate) }}
-					{{ form_errors(form.dueDate) }}
-				</div>
-
-				<div class="mb-4">
-					{{ form_label(form.assignedTo, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-					{{ form_widget(form.assignedTo) }}
-					{{ form_errors(form.assignedTo) }}
-				</div>
-
-
-				<div class="flex items-center justify-between">
-					<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-						Create Task
-					</button>
-					<a href="{{ path('tasks_index') }}" class="inline-block align-baseline font-bold text-blue-500 hover:text-blue-800">
-						Cancel
-					</a>
-				</div>
-			{{ form_end(form) }}
+			{{ include('task/_form.html.twig') }}
 		</div>
 	</div>
 {% endblock %}
