@@ -26,6 +26,7 @@ class TaskType extends AbstractType
 			])
 			->add('description', TextareaType::class, [
 				'label' => 'Description',
+				'required' => false,
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1', 'rows' => 4],
 			])
 			->add('status', EnumType::class, [
@@ -35,16 +36,19 @@ class TaskType extends AbstractType
 			])
 			->add('isImportant', CheckboxType::class, [
 				'label' => 'Mark as Important',
+				'required' => false,
 				'attr' => ['class' => 'mr-2'],
 				'label_attr' => ['class' => 'inline-flex items-center'],
 			])
 			->add('dueDate', DateTimeType::class, [
 				'label' => 'Due Date',
+				'required' => false,
 				'widget' => 'single_text',
 				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
 			])
 			->add('assignedTo', EntityType::class, [
 				'label' => 'Assigned to',
+				'required' => false,
 				'class' => User::class,
 				'choice_label' => 'name',
 				'multiple' => true,
