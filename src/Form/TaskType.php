@@ -7,7 +7,11 @@ use App\Entity\User;
 use App\Enum\TaskStatus;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,18 +20,27 @@ class TaskType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options): void
 	{
 		$builder
-			->add('title')
-			->add('description')
+			->add('title', TextType::class, [
+				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
+			])
+			->add('description', TextareaType::class, [
+				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1', 'rows' => 4],
+			])
 			->add('status', ChoiceType::class, [
 				'choices' => [
 					'Pending' => TaskStatus::PENDING,
 					'In Progress' => TaskStatus::IN_PROGRESS,
 					'Completed' => TaskStatus::COMPLETED,
 				],
+				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
 			])
-			->add('isImportant')
-			->add('dueDate', null, [
+			->add('isImportant', CheckboxType::class, [
+				'attr' => ['class' => 'mr-2'],
+				'label_attr' => ['class' => 'inline-flex items-center'],
+			])
+			->add('dueDate', DateTimeType::class, [
 				'widget' => 'single_text',
+				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
 			])
 			->add('assignedTo', EntityType::class, [
 				'class' => User::class,
