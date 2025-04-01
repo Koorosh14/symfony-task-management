@@ -8,10 +8,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class User implements PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
 	#[ORM\Id]
 	#[ORM\GeneratedValue]
@@ -20,6 +21,9 @@ class User implements PasswordAuthenticatedUserInterface
 
 	#[ORM\Column(length: 180)]
 	private ?string $email = null;
+
+	// #[ORM\Column]
+	private array $roles = [];
 
 	/**
 	 * @var string The hashed password
@@ -42,16 +46,16 @@ class User implements PasswordAuthenticatedUserInterface
 	#[ORM\Column]
 	private ?\DateTime $updatedAt = null;
 
-    /**
-     * @var Collection<int, Task>
-     */
-    #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'assignedTo')]
-    private Collection $assignedTasks;
+	/**
+	 * @var Collection<int, Task>
+	 */
+	#[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'assignedTo')]
+	private Collection $assignedTasks;
 
-    public function __construct()
-    {
-        $this->assignedTasks = new ArrayCollection();
-    }
+	public function __construct()
+	{
+		$this->assignedTasks = new ArrayCollection();
+	}
 
 	public function getId(): ?int
 	{
@@ -105,6 +109,16 @@ class User implements PasswordAuthenticatedUserInterface
 		$this->name = $name;
 
 		return $this;
+	}
+
+	public function getRoles(): array
+	{
+		// return [$this->role]; // Return as array, e.g., ['ROLE_USER']
+
+		$roles = $this->roles;
+		$roles[] = 'ROLE_USER'; // Ensure every user has at least ROLE_USER
+
+		return array_unique($roles);
 	}
 
 	public function getRole(): ?UserRole
@@ -164,30 +178,30 @@ class User implements PasswordAuthenticatedUserInterface
 		// $this->plainPassword = null;
 	}
 
-    /**
-     * @return Collection<int, Task>
-     */
-    public function getAssignedTasks(): Collection
-    {
-        return $this->assignedTasks;
-    }
+	/**
+	 * @return Collection<int, Task>
+	 */
+	public function getAssignedTasks(): Collection
+	{
+		return $this->assignedTasks;
+	}
 
-    public function addTask(Task $task): static
-    {
-        if (!$this->assignedTasks->contains($task)) {
-            $this->assignedTasks->add($task);
-            $task->addAssignedTo($this);
-        }
+	public function addTask(Task $task): static
+	{
+		if (!$this->assignedTasks->contains($task)) {
+			$this->assignedTasks->add($task);
+			$task->addAssignedTo($this);
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function removeTask(Task $task): static
-    {
-        if ($this->assignedTasks->removeElement($task)) {
-            $task->removeAssignedTo($this);
-        }
+	public function removeTask(Task $task): static
+	{
+		if ($this->assignedTasks->removeElement($task)) {
+			$task->removeAssignedTo($this);
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 }
