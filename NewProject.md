@@ -160,6 +160,22 @@ bin/console dbal:run-sql "SELECT * FROM user;"
 bin/console make:controller
 ```
 
+## Add form types
+To insert/update data to the databases, you can use Symfony's built-in forms:
+```
+bin/console make:form
+```
+
+Then create a new method in the controller that'll pass the `$form` (`$this->createForm(...)`) to the desired Twig template, and then saves the returned values in the database using `$form->isSubmitted()` and `$entityManager->persist(...)` and `$entityManager->flush()`. [More info](https://symfony.com/doc/current/forms.html#creating-form-classes)
+
+And here's how you can render the form in the Twig template:
+```
+{{ form(form) }}
+```
+To have more control on the form elements, check out [this page](https://symfony.com/doc/current/form/form_customization.html).
+
+> Don't forget to use validation rules (Constraints/Assert) in your entities (check out the "Attributes" tab [here](https://symfony.com/doc/current/validation.html#properties)).
+
 ## Add Tailwind
 Install the bundle & initialize your app:
 ```
@@ -182,6 +198,12 @@ php bin/console tailwind:build --watch
 ```
 
 > More Tailwind commands and details can be found in [Symfony documentation](https://Symfony.com/bundles/TailwindBundle/current/index.html).
+
+## Add CRUD
+To have CRUD functionality in your project, you can either create a controller and form type and their Twig templates manually like above, or you can just create an entity and then simply use this generator command:
+```
+bin/console make:crud
+```
 
 ## Run the server
 ```
