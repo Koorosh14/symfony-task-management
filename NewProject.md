@@ -90,11 +90,16 @@ php bin/console doctrine:database:create
 ```
 
 ## Create entities and migrations
-Create `User`, `Task` and `Log` entities with `make` command:
+Create `Task` and `Log` entities with `make` command:
 ```
 php bin/console make:entity
 ```
 > Note that you should use PascalCase for class names and camelCase for property names.
+
+Create `User` entity with its special command:
+```
+php bin/console make:user
+```
 
 Update entity and repository classes if needed and when you're done, make the migrations:
 ```
@@ -143,6 +148,7 @@ Lastly, load the fixtures into your database tables:
 ```
 bin/console doctrine:fixtures:load
 ```
+> Note that if your Symfony installation is configured properly, you can execute `bin/console` commands without the `php` prefix.
 
 Or if you don't want to lose your data:
 ```
@@ -204,6 +210,19 @@ To have CRUD functionality in your project, you can either create a controller a
 ```
 bin/console make:crud
 ```
+
+## Register/Login/Logout functionalities
+If you have already added the `security-bundle` to your project, you can add a simple login, logout and register functionalities using these generator commands:
+```
+bin/console make:registration-form
+
+bin/console make:security:form-login
+```
+> If you want to create these forms manually instead, check out [this detailed guide](https://symfony.com/doc/current/security.html).
+
+After you've added user authentication, you can update the `access_control` section in your `security.yaml` file and choose with wildcard paths can be accessed publicly, which ones require login and which ones are admin only.
+
+> Note: If you have already created a sample/test user manually in the database, you should hash their password so that they can log in without any problems. (You can use `bin/console security:hash-password` command to hash passwords, then you should manually replace the result with the one you have in your database table)
 
 ## Run the server
 ```
