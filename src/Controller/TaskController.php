@@ -41,7 +41,7 @@ final class TaskController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid())
 		{
 			// Temporarily select a random user, will fix this later
-			$task->setCreatedBy($entityManager->getRepository(User::class)->findOneBy([]));
+			$task->setCreatedBy($this->getUser());
 
 			$entityManager->persist($task);
 			$entityManager->flush();
