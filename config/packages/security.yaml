@@ -20,10 +20,12 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+                # where to redirect after login/register if there's no previous page was stored in the session
+                default_target_path: tasks_index
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                target: /
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
