@@ -3,17 +3,41 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-	<h1>Register</h1>
+	<div class="container mx-auto px-4 py-8">
+		<div class="bg-white shadow-md rounded-lg p-6">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h1 class="text-3xl font-bold mb-6">Register</h1>
+					</div>
+					<div class="card-body">
+						{{ form_start(registrationForm) }}
+						<div class="mb-3">
+							{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'text-gray-700 font-bold mb-2'}}) }}
+							{{ form_widget(registrationForm.email, {'attr': {'class': 'text-gray-700 font-bold border-2'}}) }}
+							{{ form_errors(registrationForm.email) }}
+						</div>
 
-	{{ form_errors(registrationForm) }}
+						<div class="mb-3">
+							{{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': {'class': 'text-gray-700 font-bold mb-2'}}) }}
+							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'text-gray-700 font-bold border-2'}}) }}
+							{{ form_errors(registrationForm.plainPassword) }}
+						</div>
 
-	{{ form_start(registrationForm) }}
-		{{ form_row(registrationForm.email) }}
-		{{ form_row(registrationForm.plainPassword, {
-			label: 'Password'
-		}) }}
-		{{ form_row(registrationForm.agreeTerms) }}
+						<div class="mb-3 form-check">
+							{{ form_widget(registrationForm.agreeTerms) }}
+							{{ form_label(registrationForm.agreeTerms, 'I agree to the terms of service', {'label_attr': {'class': 'form-check-label'}}) }}
+							{{ form_errors(registrationForm.agreeTerms) }}
+						</div>
 
-		<button type="submit" class="btn">Register</button>
-	{{ form_end(registrationForm) }}
+						<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+						{{ form_end(registrationForm) }}
+					</div>
+					<div class="card-footer text-center">
+						<p class="mb-0">Already have an account? <a href="{{ path('app_login') }}" class="text-blue-400">Login here</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
