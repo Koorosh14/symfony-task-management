@@ -58,6 +58,13 @@ final class TaskController extends AbstractController
 	#[Route('/tasks/{id<\d+>}/edit', name: 'task_edit')]
 	public function edit(Task $task, Request $request, EntityManagerInterface $entityManager): Response
 	{
+		if ($task->getCreatedBy() !== $this->getUser())
+		{
+			$this->addFlash('error', 'You can\'t edit this task!');
+
+			return $this->redirectToRoute('tasks_index');
+		}
+
 		$form = $this->createForm(TaskType::class, $task);
 
 		$form->handleRequest($request);
@@ -79,6 +86,13 @@ final class TaskController extends AbstractController
 	#[Route('/tasks/{id<\d+>}/delete', name: 'task_delete', methods: ['POST'])]
 	public function delete(Task $task, Request $request, EntityManagerInterface $entityManager): Response
 	{
+		if ($task->getCreatedBy() !== $this->getUser())
+		{
+			$this->addFlash('error', 'You can\'t delete this task!');
+
+			return $this->redirectToRoute('tasks_index');
+		}
+
 		// Check CSRF token for security
 		if ($this->isCsrfTokenValid('delete' . $task->getId(), $request->request->get('_token')))
 		{
