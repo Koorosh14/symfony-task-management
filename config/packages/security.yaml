@@ -21,7 +21,7 @@ security:
                 check_path: app_login
                 enable_csrf: true
                 # where to redirect after login/register if there's no previous page was stored in the session
-                default_target_path: tasks_index
+                default_target_path: user_dashboard
             logout:
                 path: app_logout
                 # where to redirect after logout
