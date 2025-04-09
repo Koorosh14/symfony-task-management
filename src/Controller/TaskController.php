@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Task;
-use App\Entity\User;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +17,7 @@ final class TaskController extends AbstractController
 	public function index(TaskRepository $taskRepository): Response
 	{
 		return $this->render('task/index.html.twig', [
-			'tasks' => $taskRepository->findAll(),
+			'tasks' => $taskRepository->findBy(['createdBy' => $this->getUser()]),
 		]);
 	}
 
