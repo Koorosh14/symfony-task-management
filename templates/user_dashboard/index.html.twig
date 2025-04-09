@@ -30,15 +30,19 @@
 					<h5 class="font-semibold text-lg">Recent Tasks</h5>
 				</div>
 				<div class="p-6">
-					<ul class="divide-y divide-gray-200">
-						{% for task in recentTasks %}
-							<li class="py-3 {% if task.status == 'completed' %}bg-green-50{% endif %}">
-								<a href="{{ path('task_show', {'id': task.id}) }}" class="text-blue-600 hover:text-blue-800">{{ task.title }}</a>
-								<small class="block text-gray-500">Due:
-									{{ task.dueDate|date('Y-m-d') }}</small>
-							</li>
-						{% endfor %}
-					</ul>
+					{% if recentTasks|length > 0 %}
+						<ul class="divide-y divide-gray-200">
+							{% for task in recentTasks %}
+								<li class="py-3 {% if task.status == 'completed' %}bg-green-50{% endif %}">
+									<a href="{{ path('task_show', {'id': task.id}) }}" class="text-blue-600 hover:text-blue-800">{{ task.title }}</a>
+									<small class="block text-gray-500">Due:
+										{{ task.dueDate|date('Y-m-d') }}</small>
+								</li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						<p class="text-center text-gray-500">No tasks found.</p>
+					{% endif %}
 				</div>
 			</div>
 		</div>
