@@ -31,7 +31,7 @@
 			{% if task.description %}
 				<div class="mb-4">
 					<h2 class="text-xl font-semibold mb-2">Description</h2>
-					<p class="text-gray-700">{{ task.description }}</p>
+					<p class="text-gray-700">{{ task.description|nl2br }}</p>
 				</div>
 			{% endif %}
 
