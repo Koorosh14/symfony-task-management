@@ -17,7 +17,7 @@ final class TaskController extends AbstractController
 	public function index(TaskRepository $taskRepository): Response
 	{
 		return $this->render('task/index.html.twig', [
-			'tasks' => $taskRepository->findBy(['createdBy' => $this->getUser()]),
+			'tasks' => $taskRepository->findTasksByUser($this->getUser()),
 		]);
 	}
 
