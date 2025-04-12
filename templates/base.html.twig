@@ -52,6 +52,14 @@
 			</div>
 		</nav>
 
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="{{ label == 'success' ? 'bg-green-100 border border-green-400 text-green-700' : '' }}{{ label == 'error' ? 'bg-red-100 border border-red-400 text-red-700' : '' }} px-4 py-3 rounded m-4">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+
 		{% block body %}{% endblock %}
 	</body>
 </html>
