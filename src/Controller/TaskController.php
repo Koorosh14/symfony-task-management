@@ -14,10 +14,18 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TaskController extends AbstractController
 {
 	#[Route('/tasks', name: 'tasks_index')]
-	public function index(TaskRepository $taskRepository): Response
+	public function index(TaskRepository $taskRepository, Request $request): Response
 	{
+		// Get filters from URL parameters
+		$filters = [
+			'status'    => $request->query->get('status'),
+			'sort'      => $request->query->get('sort', 'dueDate'),
+			'sort_by'   => $request->query->get('sort_by', 'ASC'),
+		];
+
 		return $this->render('task/index.html.twig', [
-			'tasks' => $taskRepository->findTasksByUser($this->getUser()),
+			'tasks'          => $taskRepository->findTasksByUser($this->getUser(), $filters),
+			'currentFilters' => $filters,
 		]);
 	}
 
