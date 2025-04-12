@@ -46,7 +46,7 @@
 		<div id="assigned-tasks" class="tab-content hidden">
 			<h2 class="text-xl font-semibold mb-4">Tasks Assigned to You</h2>
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				{% for task in tasks|filter(task => task.assignedTo == app.user) %}
+				{% for task in tasks|filter(task => app.user in task.assignedTo) %}
 					<div class="bg-white rounded-lg shadow-md p-6">
 						<h2 class="text-xl font-semibold mb-2">
 							<a href="{{ path('task_show', {id: task.id}) }}" class="hover:text-blue-600">{{ task.title }}</a>
@@ -55,6 +55,9 @@
 						<div class="flex items-center justify-between mb-2">
 							<span class="text-sm {% if task.status.value == 'COMPLETED' %}text-green-600{% else %}text-yellow-600{% endif %}">{{ task.status.value|upper }}</span>
 							<span class="text-sm text-gray-500">{{ task.dueDate ? 'Due: ' ~ task.dueDate|date('F d, Y') : '' }}</span>
+						</div>
+						<div class="flex items-center justify-between mb-2">
+							<span class="text-gray-400">(Assigned by {{ task.createdBy.email }})</span>
 						</div>
 					</div>
 				{% else %}
