@@ -31,6 +31,8 @@ class TaskRepository extends ServiceEntityRepository
 			->where('t.createdBy = :user') // Tasks created by the user
 			->orWhere('u.id = :user') // Tasks assigned to the user
 			->setParameter('user', $user)
+			->addOrderBy('t.dueDate', 'DESC')
+			->addOrderBy('t.createdAt', 'DESC')
 			->getQuery()
 			->getResult();
 	}
