@@ -17,14 +17,26 @@
 			{% endfor %}
 		{% endfor %}
 
-		{% if tasks is not empty %}
+		{# Tabs #}
+		<div class="mb-4 border-b border-gray-200">
+			<ul class="flex flex-wrap -mb-px">
+				<li class="mr-2">
+					<button class="tab-link inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-tab="created-tasks">Created by You</button>
+				</li>
+				<li class="mr-2">
+					<button class="tab-link inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-tab="assigned-tasks">Assigned to You</button>
+				</li>
+			</ul>
+		</div>
+
+		{# Created Tasks #}
+		<div id="created-tasks" class="tab-content">
+			<h2 class="text-xl font-semibold mb-4">Tasks You Created</h2>
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				{% for task in tasks %}
+				{% for task in tasks|filter(task => task.createdBy == app.user) %}
 					<div class="bg-white rounded-lg shadow-md p-6">
 						<h2 class="text-xl font-semibold mb-2">
-							<a href="{{ path('task_show', {id: task.id}) }}" class="hover:text-blue-600">
-								{{ task.title }}
-							</a>
+							<a href="{{ path('task_show', {id: task.id}) }}" class="hover:text-blue-600">{{ task.title }}</a>
 						</h2>
 						<p class="text-gray-600 mb-2">{{ task.description|length > 15 ? task.description|slice(0, 15) ~ '...' : task.description|default('-') }}</p>
 						<div class="flex items-center justify-between mb-2">
@@ -32,10 +44,42 @@
 							<span class="text-sm text-gray-500">{{ task.dueDate ? 'Due: ' ~ task.dueDate|date('F d, Y') : '' }}</span>
 						</div>
 					</div>
+				{% else %}
+					<p class="text-gray-500">No tasks created by you yet.</p>
 				{% endfor %}
 			</div>
-		{% else %}
-			<p class="text-gray-600">No tasks found.</p>
-		{% endif %}
+		</div>
+
+		{# Assigned Tasks #}
+		<div id="assigned-tasks" class="tab-content hidden">
+			<h2 class="text-xl font-semibold mb-4">Tasks Assigned to You</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				{% for task in tasks|filter(task => task.assignedTo == app.user) %}
+					<div class="bg-white rounded-lg shadow-md p-6">
+						<h2 class="text-xl font-semibold mb-2">
+							<a href="{{ path('task_show', {id: task.id}) }}" class="hover:text-blue-600">{{ task.title }}</a>
+						</h2>
+						<p class="text-gray-600 mb-2">{{ task.description|length > 15 ? task.description|slice(0, 15) ~ '...' : task.description|default('-') }}</p>
+						<div class="flex items-center justify-between mb-2">
+							<span class="text-sm {% if task.status.value == 'COMPLETED' %}text-green-600{% else %}text-yellow-600{% endif %}">{{ task.status.value|upper }}</span>
+							<span class="text-sm text-gray-500">{{ task.dueDate ? 'Due: ' ~ task.dueDate|date('F d, Y') : '' }}</span>
+						</div>
+					</div>
+				{% else %}
+					<p class="text-gray-500">No tasks assigned to you yet.</p>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
+
+	<script>
+		document.querySelectorAll('.tab-link').forEach(button => {
+			button.addEventListener('click', () => {
+				document.querySelectorAll('.tab-content').forEach(content => {
+					content.classList.add('hidden');
+				});
+				document.getElementById(button.getAttribute('data-tab')).classList.remove('hidden');
+			});
+		});
+	</script>
 {% endblock %}
