@@ -14,7 +14,8 @@
 			<div class="filters mb-4 md:mb-0">
 				<form action="{{ path('tasks_index') }}" method="get" class="flex flex-wrap gap-2">
 					<div>
-						<select name="status" class="py-2 px-3 border border-gray-300 rounded-md">
+						<label for="filters-status" class="text-gray-600">Status</label>
+						<select id="filters-status" name="status" class="py-2 px-3 border border-gray-300 rounded-md">
 							<option value="">All Statuses</option>
 							<option value="PENDING" {{ currentFilters['status'] == 'PENDING' ? 'selected' : '' }}>Pending</option>
 							<option value="IN_PROGRESS" {{ currentFilters['status'] == 'IN_PROGRESS' ? 'selected' : '' }}>In Progress</option>
@@ -23,7 +24,8 @@
 					</div>
 
 					<div>
-						<select name="sort" class="py-2 px-3 border border-gray-300 rounded-md">
+						<label for="filters-sort" class="text-gray-600">Sort</label>
+						<select id="filters-sort" name="sort" class="py-2 px-3 border border-gray-300 rounded-md">
 							<option value="dueDate" {{ currentFilters['sort'] == 'dueDate' ? 'selected' : '' }}>Due Date</option>
 							<option value="title" {{ currentFilters['sort'] == 'title' ? 'selected' : '' }}>Title</option>
 							<option value="status" {{ currentFilters['sort'] == 'status' ? 'selected' : '' }}>Status</option>
@@ -43,9 +45,11 @@
 						Apply Filters
 					</button>
 
-					<a href="{{ path('tasks_index') }}" class="py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
-						Reset
-					</a>
+					{% if currentFilters['status'] or currentFilters['sort'] != 'dueDate' or currentFilters['sort_by'] != 'ASC' %}
+						<a href="{{ path('tasks_index') }}" class="py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+							Reset
+						</a>
+					{% endif %}
 				</form>
 			</div>
 		</div>

@@ -45,6 +45,10 @@ class TaskRepository extends ServiceEntityRepository
 
 		$queryBuilder->orderBy('t.' . $sort, $sortBy);
 
+		// Add a default due date sort if the selected option is different
+		if ($sort !== 'dueDate')
+			$queryBuilder->addOrderBy('t.dueDate', 'ASC');
+
 		return $queryBuilder->getQuery()->getResult();
 	}
 }
