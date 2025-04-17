@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,12 +21,13 @@ class TaskRepository extends ServiceEntityRepository
 	/**
 	 * Returns tasks created by and assigned to the given user (with search, filters and sorting).
 	 *
-	 * @param	User	$user
-	 * @param	array	$filters
+	 * @param	User			$user
+	 * @param	array			$filters
+	 * @param	bool			$returnQuery	Return the query instead of tasks array.
 	 *
-	 * @return	Task[]
+	 * @return	Task[]|Query
 	 */
-	public function findTasksByUser(User $user, array $filters = []): array
+	public function findTasksByUser(User $user, array $filters = [], bool $returnQuery): array|Query
 	{
 		$queryBuilder = $this->createQueryBuilder('t')
 			->leftJoin('t.assignedTo', 'u') // Join with the assignedTo relationship
@@ -55,6 +57,6 @@ class TaskRepository extends ServiceEntityRepository
 		if ($sort !== 'dueDate')
 			$queryBuilder->addOrderBy('t.dueDate', 'ASC');
 
-		return $queryBuilder->getQuery()->getResult();
+		return $returnQuery ? $queryBuilder->getQuery() : $queryBuilder->getQuery()->getResult();
 	}
 }

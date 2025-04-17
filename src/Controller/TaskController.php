@@ -6,6 +6,7 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TaskController extends AbstractController
 {
 	#[Route('/tasks', name: 'tasks_index')]
-	public function index(TaskRepository $taskRepository, Request $request): Response
+	public function index(TaskRepository $taskRepository, Request $request, PaginatorInterface $paginator): Response
 	{
 		// Get filters from URL parameters
 		$filters = [
@@ -24,8 +25,10 @@ final class TaskController extends AbstractController
 			'sort_by'   => $request->query->get('sort_by', 'ASC'),
 		];
 
+		$query = $taskRepository->findTasksByUser($this->getUser(), $filters, true);
+
 		return $this->render('task/index.html.twig', [
-			'tasks'          => $taskRepository->findTasksByUser($this->getUser(), $filters),
+			'pagination'     => $paginator->paginate($query, $request->query->getInt('page', 1), 10),
 			'currentFilters' => $filters,
 		]);
 	}

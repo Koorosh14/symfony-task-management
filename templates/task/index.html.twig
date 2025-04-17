@@ -79,7 +79,7 @@
 		<div id="created-tasks" class="tab-content">
 			<h2 class="text-xl font-semibold mb-4">Tasks You Created</h2>
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				{% for task in tasks|filter(task => task.createdBy == app.user) %}
+				{% for task in pagination|filter(task => task.createdBy == app.user) %}
 					<div class="bg-white rounded-lg shadow-md p-6">
 						<h2 class="text-xl font-semibold mb-2">
 							<a href="{{ path('task_show', {id: task.id}) }}" class="hover:text-blue-600">{{ task.title }}</a>
@@ -100,7 +100,7 @@
 		<div id="assigned-tasks" class="tab-content hidden">
 			<h2 class="text-xl font-semibold mb-4">Tasks Assigned to You</h2>
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				{% for task in tasks|filter(task => app.user in task.assignedTo) %}
+				{% for task in pagination|filter(task => app.user in task.assignedTo) %}
 					<div class="bg-white rounded-lg shadow-md p-6">
 						<h2 class="text-xl font-semibold mb-2">
 							<a href="{{ path('task_show', {id: task.id}) }}" class="hover:text-blue-600">{{ task.title }}</a>
@@ -119,6 +119,11 @@
 				{% endfor %}
 			</div>
 		</div>
+	</div>
+
+	{# Pagination controls #}
+	<div class="mt-4">
+		{{ knp_pagination_render(pagination) }}
 	</div>
 
 	<script>
