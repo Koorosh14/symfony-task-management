@@ -18,7 +18,7 @@ class TaskRepository extends ServiceEntityRepository
 	}
 
 	/**
-	 * Returns tasks created by and assigned to the given user (with filters and sorting).
+	 * Returns tasks created by and assigned to the given user (with search, filters and sorting).
 	 *
 	 * @param	User	$user
 	 * @param	array	$filters
@@ -33,6 +33,12 @@ class TaskRepository extends ServiceEntityRepository
 			->orWhere('u.id = :user') // Tasks assigned to the user
 			->setParameter('user', $user);
 
+		if (!empty($filters['search']))
+		{
+			$queryBuilder->andWhere('t.title LIKE :search OR t.description LIKE :search')
+				->setParameter('search', "%{$filters['search']}%");
+		}
+
 		if (($status = $filters['status']) && in_array(strtoupper($status), ['PENDING', 'IN_PROGRESS', 'COMPLETED']))
 		{
 			$queryBuilder
@@ -43,7 +49,7 @@ class TaskRepository extends ServiceEntityRepository
 		$sort   = in_array($filters['sort'], ['title', 'dueDate', 'status', 'createdAt', 'isImportant']) ? $filters['sort'] : 'dueDate';
 		$sortBy = in_array(strtoupper($filters['sort_by']), ['ASC', 'DESC']) ? strtoupper($filters['sort_by']) : 'dueDate';
 
-		$queryBuilder->orderBy('t.' . $sort, $sortBy);
+		$queryBuilder->orderBy("t.$sort", $sortBy);
 
 		// Add a default due date sort if the selected option is different
 		if ($sort !== 'dueDate')

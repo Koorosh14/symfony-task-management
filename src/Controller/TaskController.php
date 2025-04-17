@@ -18,6 +18,7 @@ final class TaskController extends AbstractController
 	{
 		// Get filters from URL parameters
 		$filters = [
+			'search'    => $request->query->get('search'),
 			'status'    => $request->query->get('status'),
 			'sort'      => $request->query->get('sort', 'dueDate'),
 			'sort_by'   => $request->query->get('sort_by', 'ASC'),
