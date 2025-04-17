@@ -57,7 +57,13 @@ class TaskType extends AbstractType
 				'label' => 'Assigned to',
 				'required' => false,
 				'class' => User::class,
-				'choice_label' => 'name',
+				'choice_label' => function(User $user)
+				{
+					$name  = $user->getName();
+					$email = $user->getEmail();
+
+					return $name ? "$name ($email)" : $email;
+				},
 				'multiple' => true,
 			]);
 	}

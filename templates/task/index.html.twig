@@ -111,7 +111,7 @@
 							<span class="text-sm text-gray-500">{{ task.dueDate ? 'Due: ' ~ task.dueDate|date('F d, Y') : '' }}</span>
 						</div>
 						<div class="flex items-center justify-between mb-2">
-							<span class="text-gray-400">(Assigned by {{ task.createdBy.email }})</span>
+							<span class="text-gray-400">(Assigned by {{ task.createdBy.name ?: task.createdBy.email }})</span>
 						</div>
 					</div>
 				{% else %}
