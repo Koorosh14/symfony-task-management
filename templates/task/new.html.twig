@@ -2,6 +2,16 @@
 
 {% block title %}Create New Task{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+{% endblock %}
+
 {% block body %}
 	<div class="container mx-auto px-4 py-8">
 		<h1 class="text-3xl font-bold mb-6">Create New Task</h1>
@@ -10,4 +20,15 @@
 			{{ include('task/_form.html.twig') }}
 		</div>
 	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function()
+		{
+			flatpickr('.flatpickr-input', {
+				enableTime: true,
+				dateFormat: "Y-m-d H:i",
+				time_24hr: true,
+			});
+		});
+	</script>
 {% endblock %}

@@ -48,7 +48,10 @@ class TaskType extends AbstractType
 				'label' => 'Due Date',
 				'required' => false,
 				'widget' => 'single_text',
-				'attr' => ['class' => 'w-full border rounded px-3 py-2 mt-1'],
+				'attr' => [
+					'class'       => 'flatpickr-input w-full border rounded px-3 py-2 mt-1',
+					'placeholder' => 'Select a date and time'
+				],
 			])
 			->add('assignedTo', EntityType::class, [
 				'label' => 'Assigned to',
